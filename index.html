@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灵性花园 - 心灵栖息之地</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 50%, #fbcfe8 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.9) 0%, rgba(219, 39, 119, 0.8) 100%);
+            color: white;
+            padding: 1.5rem 0;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            font-weight: 600;
+            background: linear-gradient(45deg, #ffffff, #fdf2f8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 10px rgba(236, 72, 153, 0.3);
+        }
+        
+        .garden-section {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(251, 207, 232, 0.5);
+            box-shadow: 0 8px 32px rgba(236, 72, 153, 0.1);
+        }
+        
+        .section-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #ec4899;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .flower-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .flower-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(252, 231, 243, 0.8) 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .flower-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(236, 72, 153, 0.2);
+            border-color: #ec4899;
+        }
+        
+        .flower-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .flower-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #db2777;
+            margin-bottom: 0.5rem;
+        }
+        
+        .flower-description {
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #db2777 0%, #be185d 100%);
+            transform: scale(1.05);
+        }
+        
+        .quote-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(252, 231, 243, 0.8) 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+            text-align: center;
+            border: 2px solid rgba(236, 72, 153, 0.3);
+            position: relative;
+        }
+        
+        .quote-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: #db2777;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+        
+        .quote-author {
+            color: #9d174d;
+            font-style: italic;
+        }
+        
+        .floating-petals {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .petal {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.3;
+            animation: petalFall 10s linear infinite;
+        }
+        
+        @keyframes petalFall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        .garden-interface {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(236, 72, 153, 0.3);
+        }
+        
+        .flower-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .flower-btn {
+            padding: 1rem;
+            border: 2px solid #ec4899;
+            border-radius: 15px;
+            background: rgba(236, 72, 153, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .flower-btn:hover {
+            background: rgba(236, 72, 153, 0.2);
+            transform: scale(1.05);
+        }
+        
+        .flower-btn .emoji {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .garden-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+            min-height: 200px;
+            background: rgba(252, 231, 243, 0.5);
+            border-radius: 15px;
+            padding: 1rem;
+            border: 2px dashed rgba(236, 72, 153, 0.3);
+        }
+        
+        .flower-item {
+            text-align: center;
+            animation: growFlower 0.5s ease-out;
+        }
+        
+        @keyframes growFlower {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .moonlight-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1000;
+            animation: moonlightGlow 4s ease-in-out infinite alternate;
+        }
+        
+        @keyframes moonlightGlow {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+        
+        .moon {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #fef3c7 0%, #fde68a 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 50px rgba(254, 243, 199, 0.8);
+            animation: moonFloat 6s ease-in-out infinite;
+        }
+        
+        @keyframes moonFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .energy-display {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .energy-bar {
+            flex: 1;
+            height: 20px;
+            background: rgba(236, 72, 153, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .energy-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ec4899, #db2777);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .purify-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .purify-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        /* 心灵日记样式 */
+        .diary-interface {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(236, 72, 153, 0.3);
+        }
+        
+        .diary-input {
+            width: 100%;
+            min-height: 200px;
+            padding: 1rem;
+            border: 2px solid rgba(236, 72, 153, 0.3);
+            border-radius: 15px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            resize: vertical;
+            margin-bottom: 1rem;
+        }
+        
+        .diary-input:focus {
+            outline: none;
+            border-color: #ec4899;
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+        }
+        
+        .diary-entry {
+            background: rgba(252, 231, 243, 0.5);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #ec4899;
+        }
+        
+        .diary-date {
+            color: #9d174d;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .diary-content {
+            color: #6b7280;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+        
+        /* 星座运势样式 */
+        .horoscope-interface {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(236, 72, 153, 0.3);
+        }
+        
+        .zodiac-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .zodiac-btn {
+            padding: 1rem;
+            border: 2px solid #ec4899;
+            border-radius: 15px;
+            background: rgba(236, 72, 153, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .zodiac-btn:hover {
+            background: rgba(236, 72, 153, 0.2);
+            transform: scale(1.05);
+        }
+        
+        .zodiac-btn.active {
+            background: rgba(236, 72, 153, 0.3);
+            border-color: #db2777;
+        }
+        
+        .horoscope-result {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(252, 231, 243, 0.8) 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+        
+        .horoscope-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #db2777;
+            margin-bottom: 1rem;
+        }
+        
+        .luck-level {
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .header-title {
+                font-size: 2rem;
+            }
+            
+            .flower-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .flower-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .moon {
+                width: 60px;
+                height: 60px;
+                top: 30px;
+                right: 30px;
+            }
+            
+            .flower-card {
+                padding: 1rem;
+                margin: 0.5rem 0;
+            }
+            
+            .flower-icon {
+                font-size: 2.5rem;
+            }
+            
+            .flower-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 飘落的花瓣 -->
+    <div class="floating-petals" id="petalsContainer"></div>
+
+    <!-- 头部 -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="header-title">灵性花园</h1>
+                <div style="color: rgba(255, 255, 255, 0.9); text-align: right;">
+                    <div id="currentTime" style="font-size: 1.1rem; margin-bottom: 0.5rem;"></div>
+                    <div style="font-style: italic;">心灵栖息之地 🌸</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container" style="padding-top: 1rem; padding-bottom: 2rem; position: relative; z-index: 2;">
+        <!-- 每日语录 -->
+        <div class="quote-section">
+            <div class="quote-text" id="dailyQuoteText"></div>
+            <div class="quote-author" id="dailyQuoteAuthor"></div>
+        </div>
+
+        <!-- 花园功能网格 -->
+        <div class="garden-section">
+            <h2 class="section-title">灵性花园功能</h2>
+            <div class="flower-grid">
+                <!-- 灵性语录 -->
+                <div class="flower-card" onclick="showQuotes()">
+                    <span class="flower-icon">📖</span>
+                    <h3 class="flower-title">灵性语录</h3>
+                    <p class="flower-description">每日更新的灵性智慧语录，为您的灵魂提供滋养</p>
+                    <button class="btn btn-primary">阅读语录</button>
+                </div>
+
+                <!-- 虚拟花园 -->
+                <div class="flower-card" onclick="toggleGarden()">
+                    <span class="flower-icon">🌺</span>
+                    <h3 class="flower-title">虚拟花园</h3>
+                    <p class="flower-description">种植属于您的心灵花朵，见证灵性成长的美丽过程</p>
+                    <button class="btn btn-primary">培育花园</button>
+                </div>
+
+                <!-- 月光冥想 -->
+                <div class="flower-card" onclick="toggleMoonlight()">
+                    <span class="flower-icon">🌙</span>
+                    <h3 class="flower-title">月光冥想</h3>
+                    <p class="flower-description">在虚拟月光下进行深度冥想，连接宇宙能量</p>
+                    <button class="btn btn-primary" id="moonlightBtn">月光之旅</button>
+                </div>
+
+                <!-- 能量净化 -->
+                <div class="flower-card" onclick="showEnergyPurify()">
+                    <span class="flower-icon">💫</span>
+                    <h3 class="flower-title">能量净化</h3>
+                    <p class="flower-description">清理负面能量，让正能量在您的生活中流动</p>
+                    <button class="btn btn-primary">净化空间</button>
+                </div>
+
+                <!-- 心灵日记 -->
+                <div class="flower-card" onclick="showDiary()">
+                    <span class="flower-icon">📝</span>
+                    <h3 class="flower-title">心灵日记</h3>
+                    <p class="flower-description">记录每日心灵感悟，见证灵性成长的轨迹</p>
+                    <button class="btn btn-primary">写日记</button>
+                </div>
+
+                <!-- 星座运势 -->
+                <div class="flower-card" onclick="showHoroscope()">
+                    <span class="flower-icon">✨</span>
+                    <h3 class="flower-title">星座运势</h3>
+                    <p class="flower-description">查看今日星座运势，了解宇宙能量的指引</p>
+                    <button class="btn btn-primary">查运势</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 虚拟花园界面 -->
+        <div class="garden-interface hidden" id="gardenInterface">
+            <h2 class="section-title">🌺 虚拟花园 🌺</h2>
+            <p style="text-align: center; color: #6b7280; margin-bottom: 2rem;">
+                选择您想要种植的花朵，见证灵性成长的美丽过程
+            </p>
+            
+            <div class="flower-buttons">
+                <div class="flower-btn" onclick="plantFlower('rose')">
+                    <span class="emoji">🌹</span>
+                    <div>玫瑰</div>
+                    <div style="font-size: 0.8rem; color: #9d174d;">象征爱与勇气</div>
+                </div>
+                <div class="flower-btn" onclick="plantFlower('lily')">
+                    <span class="emoji">🌸</span>
+                    <div>百合</div>
+                    <div style="font-size: 0.8rem; color: #9d174d;">象征纯洁与新生</div>
+                </div>
+                <div class="flower-btn" onclick="plantFlower('lotus')">
+                    <span class="emoji">🌸</span>
+                    <div>莲花</div>
+                    <div style="font-size: 0.8rem; color: #9d174d;">象征开悟与智慧</div>
+                </div>
+                <div class="flower-btn" onclick="plantFlower('sunflower')">
+                    <span class="emoji">🌻</span>
+                    <div>向日葵</div>
+                    <div style="font-size: 0.8rem; color: #9d174d;">象征阳光与希望</div>
+                </div>
+                <div class="flower-btn" onclick="plantFlower('lavender')">
+                    <span class="emoji">💜</span>
+                    <div>薰衣草</div>
+                    <div style="font-size: 0.8rem; color: #9d174d;">象征平静与治愈</div>
+                </div>
+            </div>
+            
+            <div class="garden-display" id="gardenDisplay">
+                <div style="text-align: center; color: #9d174d; grid-column: 1 / -1; padding: 3rem;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🌱</div>
+                    <p>您的花园还空着，点击上方按钮开始种植吧！</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 能量净化界面 -->
+        <div class="garden-section hidden" id="energyInterface">
+            <h2 class="section-title">💫 能量净化 💫</h2>
+            <div style="text-align: center; padding: 2rem;">
+                <p style="font-size: 1.2rem; color: #6b7280; line-height: 1.6; margin-bottom: 2rem;">
+                    清理负面能量，让正能量在您的生活中流动
+                </p>
+                
+                <div class="energy-display">
+                    <span style="color: #6b7280; font-weight: 500;">能量水平:</span>
+                    <div class="energy-bar">
+                        <div class="energy-fill" id="energyFill"></div>
+                    </div>
+                    <span style="color: #ec4899; font-weight: 600;" id="energyLevel">100%</span>
+                </div>
+                
+                <button class="purify-btn" onclick="purifyEnergy()" id="purifyBtn">
+                    净化能量 (+20%)
+                </button>
+                
+                <div style="margin-top: 2rem; padding: 1rem; background: rgba(16, 185, 129, 0.1); border-radius: 10px;">
+                    <h4 style="color: #065f46; margin-bottom: 0.5rem;">净化指导:</h4>
+                    <p style="color: #065f46; font-size: 0.9rem; line-height: 1.5;">
+                        • 深呼吸，想象白光环绕全身<br/>
+                        • 释放负面情绪和压力<br/>
+                        • 接受宇宙的正能量<br/>
+                        • 保持感恩的心态
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 心灵日记界面 -->
+        <div class="diary-interface hidden" id="diaryInterface">
+            <h2 class="section-title">📝 心灵日记 📝</h2>
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <p style="color: #6b7280; font-size: 1.1rem;">记录每日心灵感悟，见证灵性成长的轨迹</p>
+            </div>
+            
+            <textarea class="diary-input" id="diaryInput" placeholder="写下您今日的心灵感悟..."></textarea>
+            
+            <div style="text-align: center;">
+                <button class="btn btn-primary" onclick="saveDiary()">保存日记</button>
+                <button class="btn" onclick="clearDiary()" style="margin-left: 1rem; background: rgba(107, 114, 128, 0.1); color: #6b7280;">清空内容</button>
+            </div>
+            
+            <div id="diaryEntries" style="margin-top: 2rem;"></div>
+        </div>
+
+        <!-- 星座运势界面 -->
+        <div class="horoscope-interface hidden" id="horoscopeInterface">
+            <h2 class="section-title">✨ 星座运势 ✨</h2>
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <p style="color: #6b7280; font-size: 1.1rem;">选择您的星座，查看今日运势</p>
+            </div>
+            
+            <div class="zodiac-buttons" id="zodiacButtons">
+                <!-- 星座按钮将通过JavaScript动态生成 -->
+            </div>
+            
+            <div class="horoscope-result hidden" id="horoscopeResult">
+                <h3 class="horoscope-title" id="horoscopeTitle"></h3>
+                <div class="luck-level" id="luckLevel"></div>
+                <p id="horoscopeText" style="color: #6b7280; line-height: 1.6;"></p>
+                <div style="margin-top: 1.5rem;">
+                    <p style="color: #9d174d; font-weight: 500;">幸运颜色: <span id="luckyColor"></span></p>
+                    <p style="color: #9d174d; font-weight: 500;">幸运数字: <span id="luckyNumber"></span></p>
+                    <p style="color: #9d174d; font-weight: 500;">今日建议: <span id="advice"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 灵性语录库（包含露易丝海的语录）
+        const quotes = [
+            {
+                text: "心灵如花园，需要每日的关爱与滋养才能绽放美丽的花朵。",
+                author: "灵性智慧"
+            },
+            {
+                text: "在宁静中，我们找到内在的力量；在呼吸中，我们连接宇宙的节奏。",
+                author: "冥想导师"
+            },
+            {
+                text: "每一朵花都有它独特的美丽，就像每一个人都有他独特的灵魂。",
+                author: "自然哲学家"
+            },
+            {
+                text: "真正的平静来自于与自己的和解，与自然的和谐共处。",
+                author: "心灵导师"
+            },
+            {
+                text: "让心灵像蝴蝶一样自由飞翔，在花丛中寻找生命的真谛。",
+                author: "灵性诗人"
+            },
+            {
+                text: "爱自己，是治愈一切的开始。当我们学会爱自己，生命中的一切都会变得美好。",
+                author: "露易丝·海"
+            },
+            {
+                text: "每一天都是新的开始，每一个念头都是种子，选择种下美好的思想。",
+                author: "露易丝·海"
+            },
+            {
+                text: "宽恕他人就是释放自己，放下过去的伤痛，才能迎接新的生命。",
+                author: "露易丝·海"
+            },
+            {
+                text: "我们的身体会回应我们内心的思想和感受，保持积极的心态是健康的关键。",
+                author: "露易丝·海"
+            },
+            {
+                text: "我相信生命是简单的，我们付出什么就会得到什么。",
+                author: "露易丝·海"
+            }
+        ];
+
+        // 状态管理
+        let gardenFlowers = [];
+        let energyLevel = 100;
+        let moonlightActive = false;
+        let diaryEntries = JSON.parse(localStorage.getItem('diaryEntries')) || [];
+        let currentZodiac = '';
+
+        // 初始化
+        function init() {
+            updateTime();
+            setInterval(updateTime, 1000);
+            createPetals();
+            setRandomQuote();
+        }
+
+        // 更新时间
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleString('zh-CN', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+
+        // 创建飘落的花瓣
+        function createPetals() {
+            const container = document.getElementById('petalsContainer');
+            for (let i = 0; i < 15; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.animationDelay = Math.random() * 10 + 's';
+                petal.style.animationDuration = Math.random() * 5 + 8 + 's';
+                petal.innerHTML = ['🌸', '🌺', '🌷', '💮', '🏵️'][Math.floor(Math.random() * 5)];
+                container.appendChild(petal);
+            }
+        }
+
+        // 设置随机语录
+        function setRandomQuote() {
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('dailyQuoteText').textContent = '"' + randomQuote.text + '"';
+            document.getElementById('dailyQuoteAuthor').textContent = '—— ' + randomQuote.author;
+        }
+
+        // 显示语录
+        function showQuotes() {
+            setRandomQuote();
+            alert('语录已更新！请查看顶部的每日语录。');
+        }
+
+        // 切换花园界面
+        function toggleGarden() {
+            const gardenInterface = document.getElementById('gardenInterface');
+            const energyInterface = document.getElementById('energyInterface');
+            
+            gardenInterface.classList.toggle('hidden');
+            energyInterface.classList.add('hidden');
+            
+            // 移除月光效果
+            if (moonlightActive) {
+                toggleMoonlight();
+            }
+        }
+
+        // 种花功能
+        function plantFlower(flowerType) {
+            const flowerEmoji = {
+                rose: '🌹',
+                lily: '🌸',
+                lotus: '🌸',
+                sunflower: '🌻',
+                lavender: '💜'
+            }[flowerType] || '🌺';
+
+            const newFlower = {
+                id: Date.now(),
+                type: flowerType,
+                name: `${flowerType}花`,
+                emoji: flowerEmoji,
+                growthStage: 0
+            };
+
+            gardenFlowers.push(newFlower);
+            updateGardenDisplay();
+
+            // 生长动画
+            let stage = 0;
+            const growthInterval = setInterval(() => {
+                if (stage < 3) {
+                    stage++;
+                    newFlower.growthStage = stage;
+                    updateGardenDisplay();
+                } else {
+                    clearInterval(growthInterval);
+                }
+            }, 2000);
+        }
+
+        // 更新花园显示
+        function updateGardenDisplay() {
+            const gardenDisplay = document.getElementById('gardenDisplay');
+            gardenDisplay.innerHTML = '';
+
+            if (gardenFlowers.length === 0) {
+                gardenDisplay.innerHTML = `
+                    <div style="text-align: center; color: #9d174d; grid-column: 1 / -1; padding: 3rem;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🌱</div>
+                        <p>您的花园还空着，点击上方按钮开始种植吧！</p>
+                    </div>
+                `;
+            } else {
+                gardenFlowers.forEach(flower => {
+                    const flowerItem = document.createElement('div');
+                    flowerItem.className = 'flower-item';
+                    flowerItem.innerHTML = `
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">${flower.emoji}</div>
+                        <div style="font-size: 0.8rem; color: #6b7280;">生长阶段: ${flower.growthStage + 1}/4</div>
+                    `;
+                    gardenDisplay.appendChild(flowerItem);
+                });
+            }
+        }
+
+        // 月光冥想功能
+        function toggleMoonlight() {
+            moonlightActive = !moonlightActive;
+            const moonlightBtn = document.getElementById('moonlightBtn');
+            
+            if (moonlightActive) {
+                // 创建月光效果
+                let overlay = document.getElementById('moonlightOverlay');
+                if (!overlay) {
+                    overlay = document.createElement('div');
+                    overlay.id = 'moonlightOverlay';
+                    overlay.className = 'moonlight-overlay';
+                    document.body.appendChild(overlay);
+                }
+                
+                let moon = document.getElementById('moon');
+                if (!moon) {
+                    moon = document.createElement('div');
+                    moon.id = 'moon';
+                    moon.className = 'moon';
+                    document.body.appendChild(moon);
+                }
+                
+                document.body.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)';
+                document.body.style.color = '#e2e8f0';
+                moonlightBtn.textContent = '结束月光冥想';
+                moonlightBtn.style.background = 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)';
+                moonlightBtn.style.color = '#0f172a';
+            } else {
+                // 移除月光效果
+                const overlay = document.getElementById('moonlightOverlay');
+                const moon = document.getElementById('moon');
+                if (overlay) overlay.remove();
+                if (moon) moon.remove();
+                
+                document.body.style.background = 'linear-gradient(135deg, #fdf2f8 0%, #fce7f3 50%, #fbcfe8 100%)';
+                document.body.style.color = '';
+                moonlightBtn.textContent = '月光之旅';
+                moonlightBtn.style.background = 'linear-gradient(135deg, #ec4899 0%, #db2777 100%)';
+                moonlightBtn.style.color = 'white';
+            }
+        }
+
+        // 显示能量净化界面
+        function showEnergyPurify() {
+            const gardenInterface = document.getElementById('gardenInterface');
+            const energyInterface = document.getElementById('energyInterface');
+            
+            energyInterface.classList.toggle('hidden');
+            gardenInterface.classList.add('hidden');
+            
+            // 移除月光效果
+            if (moonlightActive) {
+                toggleMoonlight();
+            }
+        }
+
+        // 能量净化功能
+        function purifyEnergy() {
+            if (energyLevel < 100) {
+                energyLevel = Math.min(energyLevel + 20, 100);
+                updateEnergyDisplay();
+                
+                // 净化效果
+                const effect = document.createElement('div');
+                effect.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, transparent 70%);
+                    z-index: 9999;
+                    pointer-events: none;
+                    animation: fadeOut 2s ease-out;
+                `;
+                
+                document.body.appendChild(effect);
+                setTimeout(() => effect.remove(), 2000);
+            }
+        }
+
+        // 更新能量显示
+        function updateEnergyDisplay() {
+            document.getElementById('energyFill').style.width = energyLevel + '%';
+            document.getElementById('energyLevel').textContent = energyLevel + '%';
+            
+            const purifyBtn = document.getElementById('purifyBtn');
+            if (energyLevel >= 100) {
+                purifyBtn.textContent = '能量已满';
+                purifyBtn.style.opacity = '0.6';
+                purifyBtn.style.cursor = 'not-allowed';
+            } else {
+                purifyBtn.textContent = '净化能量 (+20%)';
+                purifyBtn.style.opacity = '1';
+                purifyBtn.style.cursor = 'pointer';
+            }
+        }
+
+        // 显示心灵日记界面
+        function showDiary() {
+            const gardenInterface = document.getElementById('gardenInterface');
+            const energyInterface = document.getElementById('energyInterface');
+            const diaryInterface = document.getElementById('diaryInterface');
+            const horoscopeInterface = document.getElementById('horoscopeInterface');
+            
+            diaryInterface.classList.remove('hidden');
+            gardenInterface.classList.add('hidden');
+            energyInterface.classList.add('hidden');
+            horoscopeInterface.classList.add('hidden');
+            
+            // 移除月光效果
+            if (moonlightActive) {
+                toggleMoonlight();
+            }
+            
+            // 加载日记条目
+            loadDiaryEntries();
+        }
+
+        // 保存日记
+        function saveDiary() {
+            const diaryInput = document.getElementById('diaryInput');
+            const content = diaryInput.value.trim();
+            
+            if (content === '') {
+                alert('请输入日记内容');
+                return;
+            }
+            
+            const newEntry = {
+                id: Date.now(),
+                content: content,
+                date: new Date().toLocaleString('zh-CN')
+            };
+            
+            diaryEntries.unshift(newEntry);
+            localStorage.setItem('diaryEntries', JSON.stringify(diaryEntries));
+            
+            diaryInput.value = '';
+            loadDiaryEntries();
+            
+            // 显示保存成功效果
+            const saveEffect = document.createElement('div');
+            saveEffect.textContent = '✅ 日记保存成功！';
+            saveEffect.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(16, 185, 129, 0.9);
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 25px;
+                z-index: 10000;
+                font-weight: 500;
+                animation: fadeInOut 2s ease-in-out;
+            `;
+            
+            document.body.appendChild(saveEffect);
+            setTimeout(() => saveEffect.remove(), 2000);
+        }
+
+        // 清空日记内容
+        function clearDiary() {
+            document.getElementById('diaryInput').value = '';
+        }
+
+        // 加载日记条目
+        function loadDiaryEntries() {
+            const diaryEntriesContainer = document.getElementById('diaryEntries');
+            
+            if (diaryEntries.length === 0) {
+                diaryEntriesContainer.innerHTML = `
+                    <div style="text-align: center; color: #9d174d; padding: 3rem;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📖</div>
+                        <p>还没有日记记录，开始写下您的第一份心灵感悟吧！</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            diaryEntriesContainer.innerHTML = diaryEntries.map(entry => `
+                <div class="diary-entry">
+                    <div class="diary-date">📅 ${entry.date}</div>
+                    <div class="diary-content">${entry.content}</div>
+                    <button onclick="deleteDiaryEntry(${entry.id})" style="
+                        margin-top: 0.5rem;
+                        background: rgba(239, 68, 68, 0.1);
+                        color: #dc2626;
+                        border: 1px solid rgba(239, 68, 68, 0.3);
+                        padding: 0.25rem 0.75rem;
+                        border-radius: 15px;
+                        cursor: pointer;
+                        font-size: 0.8rem;
+                    ">删除</button>
+                </div>
+            `).join('');
+        }
+
+        // 删除日记条目
+        function deleteDiaryEntry(id) {
+            if (confirm('确定要删除这篇日记吗？')) {
+                diaryEntries = diaryEntries.filter(entry => entry.id !== id);
+                localStorage.setItem('diaryEntries', JSON.stringify(diaryEntries));
+                loadDiaryEntries();
+            }
+        }
+
+        // 显示星座运势界面
+        function showHoroscope() {
+            const gardenInterface = document.getElementById('gardenInterface');
+            const energyInterface = document.getElementById('energyInterface');
+            const diaryInterface = document.getElementById('diaryInterface');
+            const horoscopeInterface = document.getElementById('horoscopeInterface');
+            
+            horoscopeInterface.classList.remove('hidden');
+            gardenInterface.classList.add('hidden');
+            energyInterface.classList.add('hidden');
+            diaryInterface.classList.add('hidden');
+            
+            // 移除月光效果
+            if (moonlightActive) {
+                toggleMoonlight();
+            }
+            
+            // 初始化星座按钮
+            initZodiacButtons();
+        }
+
+        // 初始化星座按钮
+        function initZodiacButtons() {
+            const zodiacs = [
+                { name: '白羊座', emoji: '♈', date: '3.21-4.19' },
+                { name: '金牛座', emoji: '♉', date: '4.20-5.20' },
+                { name: '双子座', emoji: '♊', date: '5.21-6.21' },
+                { name: '巨蟹座', emoji: '♋', date: '6.22-7.22' },
+                { name: '狮子座', emoji: '♌', date: '7.23-8.22' },
+                { name: '处女座', emoji: '♍', date: '8.23-9.22' },
+                { name: '天秤座', emoji: '♎', date: '9.23-10.23' },
+                { name: '天蝎座', emoji: '♏', date: '10.24-11.22' },
+                { name: '射手座', emoji: '♐', date: '11.23-12.21' },
+                { name: '摩羯座', emoji: '♑', date: '12.22-1.19' },
+                { name: '水瓶座', emoji: '♒', date: '1.20-2.18' },
+                { name: '双鱼座', emoji: '♓', date: '2.19-3.20' }
+            ];
+            
+            const container = document.getElementById('zodiacButtons');
+            container.innerHTML = zodiacs.map(zodiac => `
+                <div class="zodiac-btn" onclick="getHoroscope('${zodiac.name}')">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">${zodiac.emoji}</div>
+                    <div>${zodiac.name}</div>
+                    <div style="font-size: 0.7rem; color: #9d174d;">${zodiac.date}</div>
+                </div>
+            `).join('');
+        }
+
+        // 获取星座运势
+        function getHoroscope(zodiac) {
+            currentZodiac = zodiac;
+            
+            // 移除所有按钮的active状态
+            document.querySelectorAll('.zodiac-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // 添加当前按钮的active状态
+            event.currentTarget.classList.add('active');
+            
+            // 运势数据
+            const horoscopes = {
+                '白羊座': {
+                    luck: '★★★★☆',
+                    text: '今天你的行动力很强，适合开始新的项目。注意控制脾气，避免冲动决策。',
+                    color: '红色',
+                    number: '7',
+                    advice: '多听取他人意见，保持耐心。'
+                },
+                '金牛座': {
+                    luck: '★★★☆☆',
+                    text: '财务方面需要谨慎处理，避免不必要的开支。感情方面稳定发展。',
+                    color: '绿色',
+                    number: '4',
+                    advice: '保持务实态度，稳扎稳打。'
+                },
+                '双子座': {
+                    luck: '★★★★★',
+                    text: '沟通能力极佳，适合社交和合作。创意灵感丰富，工作表现突出。',
+                    color: '黄色',
+                    number: '3',
+                    advice: '抓住机会，展现你的才华。'
+                },
+                '巨蟹座': {
+                    luck: '★★★☆☆',
+                    text: '情绪较为敏感，需要更多自我关怀。家庭关系和谐，享受温馨时光。',
+                    color: '银色',
+                    number: '2',
+                    advice: '给自己一些独处的时间。'
+                },
+                '狮子座': {
+                    luck: '★★★★☆',
+                    text: '领导能力得到认可，事业上有突破。注意保持谦逊，赢得更多支持。',
+                    color: '金色',
+                    number: '1',
+                    advice: '发挥创造力，展现个人魅力。'
+                },
+                '处女座': {
+                    luck: '★★★☆☆',
+                    text: '细节处理需要格外注意，避免粗心错误。健康方面保持良好的作息。',
+                    color: '灰色',
+                    number: '5',
+                    advice: '放松心情，不要过于苛求完美。'
+                },
+                '天秤座': {
+                    luck: '★★★★☆',
+                    text: '人际关系和谐，适合解决纠纷。艺术审美在线，适合创意工作。',
+                    color: '粉色',
+                    number: '6',
+                    advice: '保持平衡，做出明智选择。'
+                },
+                '天蝎座': {
+                    luck: '★★★★★',
+                    text: '直觉敏锐，能够洞察事物本质。神秘魅力吸引他人关注。',
+                    color: '深红色',
+                    number: '9',
+                    advice: '相信你的直觉，但也要理性思考。'
+                },
+                '射手座': {
+                    luck: '★★★★☆',
+                    text: '冒险精神强烈，适合尝试新事物。学习能力提升，吸收知识快速。',
+                    color: '紫色',
+                    number: '8',
+                    advice: '保持乐观，探索未知领域。'
+                },
+                '摩羯座': {
+                    luck: '★★★☆☆',
+                    text: '工作压力较大，需要合理安排时间。长期目标稳步推进。',
+                    color: '棕色',
+                    number: '10',
+                    advice: '坚持努力，成果终将显现。'
+                },
+                '水瓶座': {
+                    luck: '★★★★☆',
+                    text: '创新思维活跃，适合科技和创意领域。社交圈扩大，结识新朋友。',
+                    color: '蓝色',
+                    number: '11',
+                    advice: '保持独立思考，拥抱变革。'
+                },
+                '双鱼座': {
+                    luck: '★★★★★',
+                    text: '灵感丰富，艺术创作力强。同理心帮助他人，收获感激。',
+                    color: '海蓝色',
+                    number: '12',
+                    advice: '跟随内心感受，表达真实情感。'
+                }
+            };
+            
+            const result = horoscopes[zodiac] || horoscopes['白羊座'];
+            
+            document.getElementById('horoscopeTitle').textContent = `${zodiac}今日运势`;
+            document.getElementById('luckLevel').textContent = `幸运指数: ${result.luck}`;
+            document.getElementById('horoscopeText').textContent = result.text;
+            document.getElementById('luckyColor').textContent = result.color;
+            document.getElementById('luckyNumber').textContent = result.number;
+            document.getElementById('advice').textContent = result.advice;
+            
+            document.getElementById('horoscopeResult').classList.remove('hidden');
+        }
+
+        // 初始化应用
+        window.onload = init;
+    </script>
+</body>
+</html>
